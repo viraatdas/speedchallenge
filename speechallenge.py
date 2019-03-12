@@ -1,10 +1,25 @@
 import cv2 as cv
 import numpy as np
-cap = cv.VideoCapture("vtest.avi")
+
+cap = cv.VideoCapture("data/train.mp4")
+
+#Getting speed from the text file
+speed = []
+with open("data/train.txt") as f:
+    for line in f:
+        speed.append(f.readline())
+
+speed = [x.strip() for x in speed]
+
+
+
+#Dense Optical Flow based on the Gunner Farneback's algorithm
+cap = cv.VideoCapture("data/train.mp4") #refilling the buffer
 ret, frame1 = cap.read()
 prvs = cv.cvtColor(frame1,cv.COLOR_BGR2GRAY)
 hsv = np.zeros_like(frame1)
 hsv[...,1] = 255
+
 while(1):
     ret, frame2 = cap.read()
     next = cv.cvtColor(frame2,cv.COLOR_BGR2GRAY)
