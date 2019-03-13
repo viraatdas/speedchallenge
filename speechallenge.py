@@ -17,7 +17,7 @@ cap = cv.VideoCapture("data/train.mp4")
 all_frames = []
 ret, frame1 = cap.read()
 i = 0
-while i < len(speed):
+while i < 10:
     temp = []
     temp.append(frame1)
     try:
@@ -26,13 +26,28 @@ while i < len(speed):
         continue
     all_frames.append(temp)
     ret, frame1 = cap.read()
-    print (i)
     i+=1
+
+
+#applying Adaptive Guassian Thresholding to account for illumination changes
+i = 0
+while i < len(all_frames):
+    img = cv.cvtColor(all_frames[i][0],cv.COLOR_BGR2GRAY) #convert to grayscale
+    img = cv.medianBlur(img,5) #median blur
+
+    #After applying adaptive gaussian thresholding, saving it to all_frames
+    all_frames[i][0] = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, \
+                               cv.THRESH_BINARY, 11, 2)
+
+
 
 #since video was analyze in pairs of successive frames
 #80% of the intitial frames were training
 #and 20% were used for validation
-training, validation = all_frames[:int(0.8*len(all_frames))], all_frames[int(0.8*len(all_frames)):]
+eighty_percent = int(0.8*len(all_frames))
+training, validation = all_frames[:eighty_percent], all_frames[eighty_percent:]
+
+
 
 
 #
