@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-from collections import defaultdict
+import random
 
 
 #Getting speed from the text file
@@ -12,13 +12,20 @@ with open("data/train.txt") as f:
 speed = [x.strip() for x in speed]
 
 iter_speed = iter(speed) #making the speed list an iterable
+
 #retrieving all frames from video and saving them in all_frames
+#all_frames[np.ndarry] = speed for that particular frame
 cap = cv.VideoCapture("data/train.mp4")
-all_frames = defaultdict(np.ndarray)
+all_frames = []
 ret, frame1 = cap.read()
 while ret:
-    all_frames[frame1] = next(iter_speed)
+    temp = []
+    temp.append(frame1)
+    temp.append(float(next(iter_speed)))
+    all_frames.append(temp)
     ret, frame1 = cap.read()
+
+
 
 
 #Dense Optical Flow based on the Gunner Farneback's algorithm
