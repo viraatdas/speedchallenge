@@ -49,7 +49,6 @@ training, validation = all_frames[:eighty_percent], all_frames[eighty_percent:]
 
 
 
-
 #
 #
 #
