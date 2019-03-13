@@ -6,15 +6,13 @@ import random
 #Getting speed from the text file
 speed = []
 with open("data/train.txt") as f:
-    for line in f:
-        speed.append(f.readline())
+    speed = list(f)
 
 speed = [x.strip() for x in speed]
-
 iter_speed = iter(speed) #making the speed list an iterable
 
-#retrieving all frames from video and saving them in all_frames
-#all_frames[np.ndarry] = speed for that particular frame
+# retrieving all frames from video and saving them in all_frames
+# all_frames[np.ndarry] = speed for that particular frame
 cap = cv.VideoCapture("data/train.mp4")
 all_frames = []
 ret, frame1 = cap.read()
@@ -30,6 +28,11 @@ while i < len(speed):
     ret, frame1 = cap.read()
     print (i)
     i+=1
+
+#since video was analyze in pairs of successive frames
+#80% of the intitial frames were training
+#and 20% were used for validation
+training, validation = all_frames[:int(0.8*len(all_frames))], all_frames[int(0.8*len(all_frames)):]
 
 
 #
