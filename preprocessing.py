@@ -16,7 +16,7 @@ cap = cv.VideoCapture("data/train.mp4")
 all_frames = []
 ret, frame1 = cap.read()
 i = 0
-while i < 10:
+while i < len(speed):
     temp = []
     temp.append(frame1)
     try:
