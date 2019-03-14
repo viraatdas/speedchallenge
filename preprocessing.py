@@ -75,5 +75,6 @@ while i < len(training):
         cv.imwrite('opticalhsv.png',bgr)
     prvs = next
     i += 1
+
 cap.release()
 cv.destroyAllWindows()
