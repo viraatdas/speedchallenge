@@ -9,10 +9,10 @@ from keras.optimizers import Adam
 import keras.backend.tensorflow_backend as KTF
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 
-train = pre.hsv
+train_data = pre.hsv
 
-N_img_height = len(train)
-N_img_width = len(train[0])
+N_img_height = len(train_data)
+N_img_width = len(train_data[0])
 N_img_channels = 3
 
 
@@ -75,8 +75,8 @@ def nvidia_model():
 
     return model
 
-validation = pre.validation
-val_size = len(pre.validation)
+validation_data = pre.validation
+val_size = len(validation_data)
 BATCH = 16
 print('val_size: ', val_size)
 
@@ -96,12 +96,12 @@ callbacks_list = [modelCheckpoint]
 
 model = nvidia_model()
 history = model.fit_generator(
-    train,
+    train_data,
     steps_per_epoch=400,
     epochs=85,
     callbacks=callbacks_list,
     verbose=1,
-    validation_data=validation,
+    validation_data=validation_data,
     validation_steps=val_size)
 
 print(history)
